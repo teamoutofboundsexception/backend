@@ -13,7 +13,7 @@ import java.io.File;
 public class ServerApplication {
 
 	@PostConstruct
-	public void asd() {
+	public void createTempDirectory() {
 		ApplicationHome home = new ApplicationHome(ServerApplication.class);
 
 		File newDir = new File(home.getDir().getAbsolutePath() + File.separator + "temp/");
