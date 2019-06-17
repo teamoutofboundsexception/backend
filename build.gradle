@@ -8,23 +8,25 @@ apply plugin: 'io.spring.dependency-management'
 group = 'pl.gov.hackathon.teamoutofboundsexception'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
 }
 
 bootRun {
-    String activeProfile =  System.properties['spring.profiles.active']
-    systemProperty "spring.profiles.active", activeProfile
+	String activeProfile = System.properties['spring.profiles.active']
+	systemProperty "spring.profiles.active", activeProfile
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    implementation 'net.gcardone.junidecode:junidecode:0.4.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// unicode parser
+	implementation 'net.gcardone.junidecode:junidecode:0.4.1'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
 
