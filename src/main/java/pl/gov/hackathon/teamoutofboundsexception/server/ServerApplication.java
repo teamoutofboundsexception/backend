@@ -18,15 +18,20 @@ public class ServerApplication {
 
 		File newDir = new File(home.getDir().getAbsolutePath() + File.separator + "temp/");
 
-		if (!newDir.exists() && newDir.mkdirs()) {
-			System.out.println("File created.");
+		if (!newDir.exists()) {
+			if (newDir.mkdirs()) {
+				log.info("File created.");
+			} else {
+				log.error("File not created.");
+			}
 		} else {
-			System.out.println("File not created!!!");
+			log.info("File already exists.");
 		}
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
 	}
-
 }
+// TODO POGODA
+// TODO OPEN STREET MAP - > xy -> adres i odwrotnie
