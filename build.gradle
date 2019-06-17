@@ -29,10 +29,15 @@ dependencies {
 	implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
+    
 
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    
+    // Do parsowania plików nie wiem czy to tutaj, potrzebne do CSVRecord 
+    // HELP NEEDED 
+    compile 'org.apache.commons:commons-csv:1.7-SNAPSHOT'
 }
