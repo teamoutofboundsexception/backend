@@ -37,7 +37,6 @@ public class IntegrationController {
         FileUtils.cleanDirectory(new File(home.getDir().getAbsolutePath() + File.separator + "temp" + File.separator));
     }
 
-
     // @TODO move URLS to properties file
     @GetMapping("/perform")
     public void downloadData() throws IOException {
