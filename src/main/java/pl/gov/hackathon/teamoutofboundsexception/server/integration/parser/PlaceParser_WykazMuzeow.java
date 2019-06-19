@@ -1,7 +1,6 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 
 import org.apache.commons.csv.CSVRecord;
-import pl.gov.hackathon.teamoutofboundsexception.server.dto.Place;
 
 public class PlaceParser_WykazMuzeow extends PlaceParser {
 

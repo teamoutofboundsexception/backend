@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pl.gov.hackathon.teamoutofboundsexception.server.ServerApplication;
-import pl.gov.hackathon.teamoutofboundsexception.server.dto.Place;
+import pl.gov.hackathon.teamoutofboundsexception.server.dto.PlaceNode;
+import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.Place;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.CitiesMaping;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser_WykazMuzeow;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourceDetail;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourcesDetails;
+import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceNodeRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,10 +38,12 @@ public class IntegrationController {
     private String outputEncoding;
     private String inputEncoding;
     private List<Place> placeList;
+    private PlaceNodeRepository placeNodeRepository;
 
     @Autowired
-    public IntegrationController(CitiesMaping citiesMaping) {
+    public IntegrationController(CitiesMaping citiesMaping, PlaceNodeRepository placeNodeRepository) {
         this.citiesMaping = citiesMaping;
+        this.placeNodeRepository = placeNodeRepository;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
         tempFileAbsolutePath = home.getDir().getAbsolutePath() + File.separator + "temp" + File.separator;
@@ -71,6 +75,12 @@ public class IntegrationController {
 
         // IMPORTANT THING
         input.close();
+
+        List<PlaceNode> placeNodes = new LinkedList<>();
+
+        placeList.forEach(place -> placeNodes.add(new PlaceNode(place.getCityId(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.getNormalAVGPrice())));
+
+        placeNodes.forEach(n -> placeNodeRepository.save(n));
 
         System.out.println(placeList.size());
     }
