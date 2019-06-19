@@ -12,7 +12,8 @@ public abstract class PlaceParser {
 
     protected String inputEncoding;
     protected String outputEncoding;
-    protected CitiesMaping cities;
+    protected AtributeMaping cities;
+    protected AtributeMaping placeTypes;
 
     //temporal for parsing single record:
     protected Integer placeId;
@@ -26,8 +27,9 @@ public abstract class PlaceParser {
     protected Integer apartmentNumber;
     protected Float normalAVGPrice;
 
-    public PlaceParser(CitiesMaping cities, String outputEncoding, String inputEncoding) {
+    public PlaceParser(AtributeMaping cities, AtributeMaping placeTypes, String outputEncoding, String inputEncoding) {
         this.cities = cities;
+        this.placeTypes = placeTypes;
         this.inputEncoding = inputEncoding;
         this.outputEncoding = outputEncoding;
     }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pl.gov.hackathon.teamoutofboundsexception.server.ServerApplication;
 import pl.gov.hackathon.teamoutofboundsexception.server.dto.Place;
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.CitiesMaping;
+import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.AtributeMaping;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser_WykazMuzeow;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourceDetail;
@@ -32,13 +32,14 @@ import java.util.List;
 @RequestMapping("/integration")
 public class IntegrationController {
     private String tempFileAbsolutePath;
-    private CitiesMaping citiesMaping;
+    private AtributeMaping citiesMaping;
+    private AtributeMaping placeTypesMaping;
     private String outputEncoding;
     private String inputEncoding;
     private List<Place> placeList;
 
     @Autowired
-    public IntegrationController(CitiesMaping citiesMaping) {
+    public IntegrationController(AtributeMaping citiesMaping) {
         this.citiesMaping = citiesMaping;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
@@ -66,11 +67,14 @@ public class IntegrationController {
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/168,pomniki-historii/resources");
 
         FileInputStream input = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
-        PlaceParser placeparser = new PlaceParser_WykazMuzeow(citiesMaping, outputEncoding, inputEncoding);
+        PlaceParser placeparser = new PlaceParser_WykazMuzeow(citiesMaping, placeTypesMaping, outputEncoding, inputEncoding);
         placeparser.parseto_list(input, placeList);
+
 
         // IMPORTANT THING
         input.close();
+
+        //input = new  FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
 
         System.out.println(placeList.size());
     }

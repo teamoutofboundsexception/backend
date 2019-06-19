@@ -5,20 +5,21 @@ import pl.gov.hackathon.teamoutofboundsexception.server.dto.Place;
 
 public class PlaceParser_WykazMuzeow extends PlaceParser {
 
-    public PlaceParser_WykazMuzeow(CitiesMaping cities, String outputEncoding, String inputEncoding) {
-        super(cities, outputEncoding, inputEncoding);
+    public PlaceParser_WykazMuzeow(AtributeMaping cities, AtributeMaping placeTypes, String outputEncoding,
+                                   String inputEncoding) {
+        super(cities, placeTypes, outputEncoding, inputEncoding);
     }
 
     @Override
     public Place parsePlace(CSVRecord record) {
-        placeId = 1000000 + Integer.parseInt(record.get(0));
+        placeId = 100000000 + Integer.parseInt(record.get(0));
         cityId = cities.get(record.get(3));
 
         if (cityId == null) {
             cityId = cities.put(record.get(3));
         }
 
-        placeTypeId = 1; //1 to muzeum?
+        placeTypeId = placeTypes.get("Muzeum");
         placeName = record.get(1);
         mapX = null;
         mapY = null;

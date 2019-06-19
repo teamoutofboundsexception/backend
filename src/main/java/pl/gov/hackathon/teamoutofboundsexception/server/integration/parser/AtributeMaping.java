@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-public class CitiesMaping {
+public class AtributeMaping {
     private HashMap<String, Integer> hashmap;
 
-    public CitiesMaping() {
+    public AtributeMaping() {
         hashmap = new HashMap<>();
     }
 
