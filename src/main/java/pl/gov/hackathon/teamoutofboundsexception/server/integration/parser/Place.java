@@ -1,5 +1,8 @@
-package pl.gov.hackathon.teamoutofboundsexception.server.dto;
+package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 
+import lombok.Getter;
+
+@Getter
 public class Place {
 
     protected Integer placeId;
