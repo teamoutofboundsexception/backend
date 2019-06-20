@@ -15,6 +15,8 @@ public abstract class PlaceParser {
     //temporal for parsing single record:
     protected Integer placeId;
     protected Integer cityId;
+    protected String cityName;
+    protected String postalCode;
     protected Integer placeTypeId;
     protected String placeName;
     protected Float mapX;

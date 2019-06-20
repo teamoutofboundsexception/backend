@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pl.gov.hackathon.teamoutofboundsexception.server.ServerApplication;
-import pl.gov.hackathon.teamoutofboundsexception.server.dto.PlaceNode;
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.Place;
+
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.CitiesMaping;
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser;
+import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.Place;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser_WykazMuzeow;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourceDetail;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourcesDetails;
-import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceNodeRepository;
+import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
+import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,12 +38,13 @@ public class IntegrationController {
     private String outputEncoding;
     private String inputEncoding;
     private List<Place> placeList;
-    private PlaceNodeRepository placeNodeRepository;
+
+    private PlaceRepository placeRepository;
 
     @Autowired
-    public IntegrationController(CitiesMaping citiesMaping, PlaceNodeRepository placeNodeRepository) {
+    public IntegrationController(CitiesMaping citiesMaping, PlaceRepository placeRepository) {
         this.citiesMaping = citiesMaping;
-        this.placeNodeRepository = placeNodeRepository;
+        this.placeRepository = placeRepository;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
         tempFileAbsolutePath = home.getDir().getAbsolutePath() + File.separator + "temp" + File.separator;
@@ -70,19 +71,28 @@ public class IntegrationController {
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/168,pomniki-historii/resources");
 
         FileInputStream input = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
-        PlaceParser placeparser = new PlaceParser_WykazMuzeow(citiesMaping, outputEncoding, inputEncoding);
+        PlaceParser_WykazMuzeow placeparser = new PlaceParser_WykazMuzeow(citiesMaping, outputEncoding, inputEncoding);
         placeparser.parseto_list(input, placeList);
 
         // IMPORTANT THING
         input.close();
 
-        List<PlaceNode> placeNodes = new LinkedList<>();
+        List<PlaceModel> places = new LinkedList<>();
 
-        placeList.forEach(place -> placeNodes.add(new PlaceNode(place.getCityId(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.getNormalAVGPrice())));
+        placeList.forEach(place -> {
+            places.add(new PlaceModel(place.getCityId(), place.getCityName(), place.getPostalCode(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.getNormalAVGPrice(), place.hashCode()));
+        });
 
-        placeNodes.forEach(n -> placeNodeRepository.save(n));
+        places.forEach(n -> {
+            if (places.size() > 0) {
+                boolean placeExists = placeRepository.findByHash(n.getHash()) != null;
+                if (!placeExists) {
+                    placeRepository.save(n);
+                }
+            }
+        });
 
-        System.out.println(placeList.size());
+        placeList.clear();
     }
 
     private void downloadDataSet(String downloadUrl, String fileName) throws IOException {

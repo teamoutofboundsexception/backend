@@ -12,7 +12,8 @@ public class PlaceParser_WykazMuzeow extends PlaceParser {
     public Place parsePlace(CSVRecord record) {
         placeId = 1000000 + Integer.parseInt(record.get(0));
         cityId = cities.get(record.get(3));
-
+        cityName = record.get(3);
+        postalCode = record.get(2);
         if (cityId == null) {
             cityId = cities.put(record.get(3));
         }
@@ -51,7 +52,7 @@ public class PlaceParser_WykazMuzeow extends PlaceParser {
 
         normalAVGPrice = null;
 
-        Place place = new Place(placeId, cityId, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
+        Place place = new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
 
         return place;
     }

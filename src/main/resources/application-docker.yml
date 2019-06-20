@@ -1,20 +1,16 @@
 spring:
-  data:
-    neo4j:
-      uri: bolt://localhost
-      username: neo4j
-      password: root
   datasource:
-    url: jdbc:mariadb://database:3306/application
-    username: root
-    password: root
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: asd
+    password: asd
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         temp:
           use_jdbc_metadata_defaults: false
