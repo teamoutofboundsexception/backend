@@ -3,6 +3,8 @@ package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.time.LocalTime;
+
 @Getter
 public class Place {
 
@@ -16,13 +18,14 @@ public class Place {
     protected Float mapY;
     protected String streetName;
     protected String houseNumber;
+    // TODO change to String
     protected Integer apartmentNumber;
     protected Float normalAVGPrice;
     protected Float rating;
     protected Integer visitorsNo;
     protected Integer followerNo;
     protected Integer likesNo;
-    protected Float avgTimeSpent;
+    protected LocalTime avgTimeSpent;
 
     public Place(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
                  String houseNumber, Integer apartmentNumber, Float normalAVGPrice) {

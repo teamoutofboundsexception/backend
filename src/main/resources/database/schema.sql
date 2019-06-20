@@ -19,7 +19,7 @@ CREATE TABLE place_model (
   hash int,
   openingTime time,
   closingTime time,
-  avgTimeSpent decimal(4,2),
+  avgTimeSpent time,
   rating decimal(5,2),
   visitorsNo int,
   followersNo int,

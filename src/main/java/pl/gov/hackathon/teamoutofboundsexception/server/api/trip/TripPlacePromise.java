@@ -1,7 +1,10 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.api.trip;
 
+import lombok.Getter;
+
 import java.time.LocalTime;
 
+@Getter
 public class TripPlacePromise {
     private String actualPlaceName;
     private LocalTime time;

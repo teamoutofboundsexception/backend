@@ -33,7 +33,7 @@ public class PlaceModel {
 
     private LocalTime openingTime;
     private LocalTime closingTime;
-    private Float avgTimeSpent;
+    private LocalTime avgTimeSpent;
     private Float rating;
     private Integer visitorsNo;
     private Integer followerNo;
@@ -79,7 +79,7 @@ public class PlaceModel {
         visitorsNo = randomInt(0, 10000);
         followerNo = randomInt(0,100);
         likesNo = randomInt(0,10000);
-        avgTimeSpent = randomFloat(15, 300);
+        avgTimeSpent = LocalTime.of(15, 30);
         normalPrice = randomFloat(10, 120);
 
         int openningHour = randomInt(6,10);
