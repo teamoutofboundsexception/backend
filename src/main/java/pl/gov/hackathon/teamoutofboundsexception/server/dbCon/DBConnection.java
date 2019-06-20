@@ -1,4 +1,4 @@
-package dbCon;
+package pl.gov.hackathon.teamoutofboundsexception.server.dbCon;
 
 import java.sql.*;
 
@@ -21,7 +21,6 @@ public class DBConnection {
     public ResultSet executeQuery(String query) throws SQLException {
         initConnection();
         ResultSet rs = runStatement(query);
-        print(rs);
         return rs;
     }
 
@@ -56,13 +55,5 @@ public class DBConnection {
             }
         }
         return resultSet;
-    }
-
-    private void print(ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            System.out.println(id + "\t" + name);
-        }
     }
 }

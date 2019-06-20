@@ -1,6 +1,4 @@
-package placesGraph;
-
-import dbCon.DBConnection;
+package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +43,7 @@ public class Graph {
 
     public void initGraph(String username, String password, float mapX, float mapY, int cityId, LocalTime availableTime, float coordR) throws SQLException {
         initGraph(
-                new DBConnection(username, password)
+                new dbCon.DBConnection(username, password)
                         .executeQuery(
                                 constructQuery(mapX, mapY, cityId, availableTime, coordR)), availableTime);
     }

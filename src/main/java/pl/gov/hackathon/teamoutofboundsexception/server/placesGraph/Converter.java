@@ -1,4 +1,4 @@
-package placesGraph;
+package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
 import java.time.LocalTime;
 

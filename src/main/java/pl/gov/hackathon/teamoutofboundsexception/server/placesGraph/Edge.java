@@ -1,6 +1,5 @@
-package placesGraph;
+package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 public class Edge {
