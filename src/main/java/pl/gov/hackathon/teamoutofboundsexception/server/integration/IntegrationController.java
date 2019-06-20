@@ -86,7 +86,7 @@ public class IntegrationController {
 
         List<PlaceModel> places = new LinkedList<>();
 
-        placeList.forEach(place -> places.add(new PlaceModel(place.getCityId(), place.getCityName(), place.getPostalCode(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.getNormalAVGPrice(), place.hashCode())));
+        placeList.forEach(place -> places.add(new PlaceModel(place.getPlaceId(), place.getCityId(), place.getCityName(), place.getPostalCode(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.hashCode())));
 
         places.forEach(n -> {
             if (places.size() > 0) {
