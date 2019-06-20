@@ -3,6 +3,7 @@ package pl.gov.hackathon.teamoutofboundsexception.server.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.gcardone.junidecode.Junidecode;
 import org.apache.commons.io.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.http.*;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pl.gov.hackathon.teamoutofboundsexception.server.ServerApplication;
 
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.CitiesMaping;
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.Place;
-import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.PlaceParser_WykazMuzeow;
+import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.*;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourceDetail;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourcesDetails;
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
@@ -34,7 +33,7 @@ import java.util.List;
 @RequestMapping("/integration")
 public class IntegrationController {
     private String tempFileAbsolutePath;
-    private CitiesMaping citiesMaping;
+
     private String outputEncoding;
     private String inputEncoding;
     private List<Place> placeList;
@@ -42,8 +41,8 @@ public class IntegrationController {
     private PlaceRepository placeRepository;
 
     @Autowired
-    public IntegrationController(CitiesMaping citiesMaping, PlaceRepository placeRepository) {
-        this.citiesMaping = citiesMaping;
+    public IntegrationController(PlaceRepository placeRepository) {
+
         this.placeRepository = placeRepository;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
@@ -70,12 +69,21 @@ public class IntegrationController {
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/1130,rejestr-zabytkow-nieruchomych/resources");
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/168,pomniki-historii/resources");
 
-        FileInputStream input = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
-        PlaceParser_WykazMuzeow placeparser = new PlaceParser_WykazMuzeow(citiesMaping, outputEncoding, inputEncoding);
-        placeparser.parseto_list(input, placeList);
+        System.out.println(tempFileAbsolutePath);
+
+        FileInputStream museumInput = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
+        FileInputStream rznInput = new FileInputStream( tempFileAbsolutePath + "Rejestr_zabytkow_nieruchomych___plik_w_formacie_CSV.csv");
+
+        PlaceParser museumParser = new PlaceParser_WykazMuzeow(outputEncoding, inputEncoding);
+        museumParser.parseto_list(museumInput, placeList);
+
+        PlaceParser rzn = new PlaceParser_RejestrZabytkowNieruchomych(outputEncoding, inputEncoding);
+        rzn.parseto_list(rznInput, placeList);
 
         // IMPORTANT THING
-        input.close();
+        museumInput.close();
+        rznInput.close();
+
 
         List<PlaceModel> places = new LinkedList<>();
 

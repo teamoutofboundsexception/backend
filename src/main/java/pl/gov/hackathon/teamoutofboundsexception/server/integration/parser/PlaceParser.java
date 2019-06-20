@@ -2,6 +2,7 @@ package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.util.List;
@@ -10,7 +11,8 @@ public abstract class PlaceParser {
 
     protected String inputEncoding;
     protected String outputEncoding;
-    protected CitiesMaping cities;
+    protected AtributeMaping cities;
+    protected AtributeMaping placeTypes;
 
     //temporal for parsing single record:
     protected Integer placeId;
@@ -26,8 +28,10 @@ public abstract class PlaceParser {
     protected Integer apartmentNumber;
     protected Float normalAVGPrice;
 
-    public PlaceParser(CitiesMaping cities, String outputEncoding, String inputEncoding) {
+    @Autowired
+    public PlaceParser(AtributeMaping cities, AtributeMaping placeTypes, String outputEncoding, String inputEncoding) {
         this.cities = cities;
+        this.placeTypes = placeTypes;
         this.inputEncoding = inputEncoding;
         this.outputEncoding = outputEncoding;
     }
@@ -54,9 +58,9 @@ public abstract class PlaceParser {
         return 0;
     }
 
-    public int parseto_list(InputStream ins, List<Place> lst) {
+    public int parseto_list(InputStream ins, List<Place> lst) throws IOException {
 
-        try {
+        //try {
             InputStreamReader rd = new InputStreamReader(ins, inputEncoding);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(rd);
 
@@ -66,9 +70,10 @@ public abstract class PlaceParser {
                 lst.add(place);
             }
 
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             System.out.println("Ah shit, here we go again.\n" + e);
-        }
+        }*/
         return 0;
     }
 }
+//tak tylko teraz mam problem chyba z kompilacją

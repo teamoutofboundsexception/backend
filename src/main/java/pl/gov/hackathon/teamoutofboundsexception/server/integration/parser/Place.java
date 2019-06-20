@@ -18,6 +18,12 @@ public class Place {
     protected String houseNumber;
     protected Integer apartmentNumber;
     protected Float normalAVGPrice;
+    protected Float rating;
+    protected Integer visitorsNo;
+    protected Integer followerNo;
+    protected Integer likesNo;
+    protected Float avgTimeSpent;
+
 
     public Place(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
                  String houseNumber, Integer apartmentNumber, Float normalAVGPrice) {
@@ -33,6 +39,11 @@ public class Place {
         this.houseNumber = houseNumber;
         this.apartmentNumber = apartmentNumber;
         this.normalAVGPrice = normalAVGPrice;
+        this.rating = null;
+        this.visitorsNo = null;
+        this.followerNo = null;
+        this.likesNo = null;
+        this.avgTimeSpent = null;
     }
 
     @Override
@@ -48,6 +59,8 @@ public class Place {
 
     public String createRecordCSV(char delimeter) {
         return "" + placeId + delimeter + cityId + delimeter + placeTypeId + delimeter + mapX + delimeter + mapY
-                + delimeter + streetName + delimeter + houseNumber + delimeter + normalAVGPrice;
+                + delimeter + streetName + delimeter + houseNumber + delimeter + normalAVGPrice + delimeter +
+                rating+ delimeter + visitorsNo + delimeter + followerNo + delimeter + likesNo
+                + delimeter + avgTimeSpent;
     }
 }
