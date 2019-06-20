@@ -24,7 +24,6 @@ public class Place {
     protected Integer likesNo;
     protected Float avgTimeSpent;
 
-
     public Place(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
                  String houseNumber, Integer apartmentNumber, Float normalAVGPrice) {
         this.placeId = placeId;
