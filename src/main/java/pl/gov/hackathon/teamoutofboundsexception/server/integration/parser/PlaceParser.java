@@ -74,3 +74,4 @@ public abstract class PlaceParser {
         return 0;
     }
 }
+//tak tylko teraz mam problem chyba z kompilacją
