@@ -72,17 +72,17 @@ public class IntegrationController {
         System.out.println(tempFileAbsolutePath);
 
         FileInputStream museumInput = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
-        FileInputStream rznInput = new FileInputStream( tempFileAbsolutePath + "Rejestr_zabytkow_nieruchomych___plik_w_formacie_CSV.csv");
+        //FileInputStream rznInput = new FileInputStream( tempFileAbsolutePath + "Rejestr_zabytkow_nieruchomych___plik_w_formacie_CSV.csv");
 
         PlaceParser museumParser = new PlaceParser_WykazMuzeow(outputEncoding, inputEncoding);
         museumParser.parseto_list(museumInput, placeList);
 
-        PlaceParser rzn = new PlaceParser_RejestrZabytkowNieruchomych(outputEncoding, inputEncoding);
-        rzn.parseto_list(rznInput, placeList);
+        /*PlaceParser rzn = new PlaceParser_RejestrZabytkowNieruchomych(outputEncoding, inputEncoding);
+        rzn.parseto_list(rznInput, placeList);*/
 
         // IMPORTANT THING
         museumInput.close();
-        rznInput.close();
+        //rznInput.close();
 
 
         List<PlaceModel> places = new LinkedList<>();

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Random;
 
-
 @Getter
 @Entity
 @NoArgsConstructor
@@ -20,9 +19,6 @@ public class PlaceModel {
             name = "place_seq",
             sequenceName = "place_seq"
     )
-
-    private static final Random RANDOM = new Random();
-
     private Integer placeId;
     private Integer cityId;
     private String cityName;
@@ -42,6 +38,8 @@ public class PlaceModel {
     private Integer visitorsNo;
     private Integer followerNo;
     private Integer likesNo;
+
+    private static final Random RANDOM = new Random();
 
 
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
@@ -73,7 +71,7 @@ public class PlaceModel {
     }
 
     public static int randomInt(int min, int max) {
-        return RANDOM.nextInt(max) + min;
+        return RANDOM.nextInt(max - min) + min;
     }
 
     public void add_random_atributes() {
@@ -87,11 +85,13 @@ public class PlaceModel {
         int openningHour = randomInt(6,10);
 
         openingTime =  LocalTime.now().withHour(openningHour);
-        closingTime = LocalTime.now().withHour(openningHour + randomInt(6,12));
 
+        int closingTemp = openningHour + randomInt(6,12);
 
+        if (closingTemp > 23) {
+            closingTemp = 23;
+        }
 
-
-
+        closingTime = LocalTime.now().withHour(closingTemp);
     }
 }
