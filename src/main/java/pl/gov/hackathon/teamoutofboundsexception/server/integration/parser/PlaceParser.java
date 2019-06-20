@@ -58,9 +58,9 @@ public abstract class PlaceParser {
         return 0;
     }
 
-    public int parseto_list(InputStream ins, List<Place> lst) throws IOException {
+    public int parseto_list(InputStream ins, List<Place> lst) {
 
-        //try {
+        try {
             InputStreamReader rd = new InputStreamReader(ins, inputEncoding);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(rd);
 
@@ -69,11 +69,9 @@ public abstract class PlaceParser {
 
                 lst.add(place);
             }
-
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Ah shit, here we go again.\n" + e);
-        }*/
+        }
         return 0;
     }
 }
-//tak tylko teraz mam problem chyba z kompilacją
