@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Random;
 
 @Getter
 @Entity
@@ -33,9 +34,16 @@ public class PlaceModel {
     private LocalTime openingTime;
     private LocalTime closingTime;
     private Float avgTimeSpent;
+    private Float rating;
+    private Integer visitorsNo;
+    private Integer followerNo;
+    private Integer likesNo;
 
-    public PlaceModel(Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
-                      String houseNumber, Integer apartmentNumber, Float normalPrice, Integer hash) {
+    private static final Random RANDOM = new Random();
+
+
+    public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
+                      String houseNumber, Integer apartmentNumber, Integer hash) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.cityName = cityName;
@@ -54,7 +62,36 @@ public class PlaceModel {
         if (apartmentNumber != null) {
             address = address + "/" + apartmentNumber;
         }
+        add_random_atributes();
 
-        this.normalPrice = normalPrice;
+    }
+
+    public static float randomFloat(float min, float max) {
+        return RANDOM.nextFloat()*(max-min)+min;
+    }
+
+    public static int randomInt(int min, int max) {
+        return RANDOM.nextInt(max - min) + min;
+    }
+
+    public void add_random_atributes() {
+        rating = randomFloat(0, 5);
+        visitorsNo = randomInt(0, 10000);
+        followerNo = randomInt(0,100);
+        likesNo = randomInt(0,10000);
+        avgTimeSpent = randomFloat(15, 300);
+        normalPrice = randomFloat(10, 120);
+
+        int openningHour = randomInt(6,10);
+
+        openingTime =  LocalTime.now().withHour(openningHour);
+
+        int closingTemp = openningHour + randomInt(6,12);
+
+        if (closingTemp > 23) {
+            closingTemp = 23;
+        }
+
+        closingTime = LocalTime.now().withHour(closingTemp);
     }
 }
