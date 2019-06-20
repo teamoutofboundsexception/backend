@@ -30,6 +30,7 @@ public class PlaceModel {
     private String address;
     private Float normalPrice;
     private int hash;
+    private String stringHash;
 
     private LocalTime openingTime;
     private LocalTime closingTime;
@@ -43,7 +44,7 @@ public class PlaceModel {
 
 
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
-                      String houseNumber, Integer apartmentNumber, Integer hash) {
+                      String houseNumber, Integer apartmentNumber, Integer hash, String stringHash) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.cityName = cityName;
@@ -54,6 +55,7 @@ public class PlaceModel {
         this.mapY = mapY;
         this.address = streetName;
         this.hash = hash;
+        this.stringHash = stringHash;
 
         if (houseNumber != null && !houseNumber.isEmpty()) {
             address = address + " " + houseNumber;
