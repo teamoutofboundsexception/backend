@@ -49,10 +49,13 @@ public class Place {
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(cityId)
+                .append(cityName)
+                .append(postalCode)
                 .append(placeTypeId)
                 .append(placeName)
                 .append(mapX)
                 .append(mapY)
+                .append(streetName)
                 .toHashCode();
     }
 
