@@ -1,5 +1,7 @@
-package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
+package placesGraph;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Vertex {
@@ -10,15 +12,15 @@ public class Vertex {
             placeName, placeAddress;
     private float
             mapX, mapY,
-            normalPrice, avgTimeSpent,
-            openingTime, closingTime; //time as float!
+            normalPrice;
+    private LocalTime avgTimeSpent, openingTime, closingTime;
     private ArrayList<Edge> edges;
     private boolean visited;
 
     public Vertex(int placeId, int cityId, int placeTypeId, String placeName,
                   float mapX, float mapY, String placeAddress,
-                  float normalPrice, float avgTimeSpent,
-                  float openingTime, float closingTime) {
+                  float normalPrice, LocalTime avgTimeSpent,
+                  LocalTime openingTime, LocalTime closingTime) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.placeTypeId = placeTypeId;
@@ -34,7 +36,7 @@ public class Vertex {
     }
 
     public void setEdgeWith(Vertex vertex){
-        float val = CoordinatesToTimeConverter.get(this.mapX, this.mapY, vertex.getMapX(), vertex.getMapY());
+        LocalTime val = Converter.coordinatesToTime(this.mapX, this.mapY, vertex.getMapX(), vertex.getMapY());
         Edge edge = new Edge(this, vertex, val);
         this.edges.add(edge);
         vertex.getEdges().add(edge);
@@ -43,10 +45,10 @@ public class Vertex {
     public ArrayList<Edge> getEdges() {
         return edges;
     }
-    public float getAvgTimeSpent() {
+    public LocalTime getAvgTimeSpent() {
         return avgTimeSpent;
     }
-    public float getClosingTime() {
+    public LocalTime getClosingTime() {
         return closingTime;
     }
     public float getMapX() {
@@ -58,7 +60,7 @@ public class Vertex {
     public float getNormalPrice() {
         return normalPrice;
     }
-    public float getOpeningTime() {
+    public LocalTime getOpeningTime() {
         return openingTime;
     }
     public int getCityId() {
