@@ -1,10 +1,11 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
+import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
+
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
 
@@ -20,60 +21,25 @@ public class Graph {
         this.vertices = new ArrayList<>();
         this.trips = new ArrayList<>();
     }
+
     public Graph(ResultSet resultSet, LocalTime availableTime){
         this();
         this.availableTime = availableTime;
         this.resultSet = resultSet;
     }
 
-    private String constructQuery(float mapX, float mapY, int cityId, LocalTime availableTime, float coordR) {
-        StringBuilder sb = new StringBuilder(queryBeginning);
-        sb.append(mapX);
-        sb.append(',');
-        sb.append(mapY);
-        sb.append(',');
-        sb.append(cityId);
-        sb.append(",'");
-        sb.append(availableTime.toString());
-        sb.append("',");
-        sb.append(coordR);
-        sb.append(");");
-        return sb.toString();
-    }
-
-    public void initGraph(String username, String password, float mapX, float mapY, int cityId, LocalTime availableTime, float coordR) throws SQLException {
-        initGraph(
-                new dbCon.DBConnection(username, password)
-                        .executeQuery(
-                                constructQuery(mapX, mapY, cityId, availableTime, coordR)), availableTime);
-    }
-
-    public void initGraph(ResultSet resultSet, LocalTime availableTime) throws SQLException {
+    public void initGraph(/*ResultSet resultSet, */List<PlaceModel> placesList, LocalTime availableTime) {
         this.availableTime = availableTime;
-        while(resultSet.next()){
-            int placeId = resultSet.getInt("placeId");
-            int cityId = resultSet.getInt("cityId");
-            int placeTypeId = resultSet.getInt("placeTypeId");
-            String placeName = resultSet.getString("placeName");
-            float mapX = resultSet.getFloat("mapX");
-            float mapY = resultSet.getFloat("mapY");
-            String placeAddress = resultSet.getString("address");
-            float normalPrice = resultSet.getFloat("normalPrice");
-            Time avgTimeSpent = resultSet.getTime("avgTimeSpent");
-            Time openingTime = resultSet.getTime("openingTime");
-            Time closingTime = resultSet.getTime("closingTime");
 
-            Vertex vertex = new Vertex(
-                    placeId, cityId, placeTypeId, placeName,
-                    mapX, mapY, placeAddress,
-                    normalPrice, avgTimeSpent.toLocalTime(),
-                    openingTime.toLocalTime(), closingTime.toLocalTime()
-            );
-            for(Vertex v : this.vertices){
-                vertex.setEdgeWith(v);
-            }
-            this.vertices.add(vertex);
-        }
+            placesList.forEach(place -> {
+                Vertex vertex = new Vertex(place);
+
+                for(Vertex v : this.vertices){
+                    vertex.setEdgeWith(v);
+                }
+
+                this.vertices.add(vertex);
+            });
     }
 
     public void computeTrips(){
@@ -125,6 +91,7 @@ public class Graph {
             System.out.println(placeId + "\t" + placeName + "\t" + mapX + "\t" + mapY + "\t" + avgTimeSpent + "\t" + openingTime.toString() + "\t" + closingTime.toString());
         }
     }
+
     public void printGraph() {
         int i = 0;
         for(Vertex v : this.vertices) {
@@ -150,4 +117,7 @@ public class Graph {
         }
     }
 
+    public ArrayList<Trip> getTrips() {
+        return trips;
+    }
 }

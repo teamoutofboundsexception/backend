@@ -17,6 +17,7 @@ import pl.gov.hackathon.teamoutofboundsexception.server.ServerApplication;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.parser.*;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourceDetail;
 import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.ResourcesDetails;
+import pl.gov.hackathon.teamoutofboundsexception.server.localization.ConverterService;
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
 import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceRepository;
 
@@ -39,11 +40,13 @@ public class IntegrationController {
     private List<Place> placeList;
 
     private PlaceRepository placeRepository;
+    private ConverterService converterService;
 
     @Autowired
-    public IntegrationController(PlaceRepository placeRepository) {
+    public IntegrationController(PlaceRepository placeRepository, ConverterService converterService) {
 
         this.placeRepository = placeRepository;
+        this.converterService = converterService;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
         tempFileAbsolutePath = home.getDir().getAbsolutePath() + File.separator + "temp" + File.separator;
@@ -69,12 +72,10 @@ public class IntegrationController {
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/1130,rejestr-zabytkow-nieruchomych/resources");
         getDataUrlAndDownloadData("https://api.dane.gov.pl/datasets/168,pomniki-historii/resources");
 
-        System.out.println(tempFileAbsolutePath);
-
         FileInputStream museumInput = new FileInputStream( tempFileAbsolutePath + "Wykaz_muzeow_(csv).csv");
         //FileInputStream rznInput = new FileInputStream( tempFileAbsolutePath + "Rejestr_zabytkow_nieruchomych___plik_w_formacie_CSV.csv");
 
-        PlaceParser museumParser = new PlaceParser_WykazMuzeow(outputEncoding, inputEncoding);
+        PlaceParser museumParser = new PlaceParser_WykazMuzeow(converterService, outputEncoding, inputEncoding);
         museumParser.parseto_list(museumInput, placeList);
 
         /*PlaceParser rzn = new PlaceParser_RejestrZabytkowNieruchomych(outputEncoding, inputEncoding);

@@ -36,7 +36,7 @@ public abstract class PlaceParser {
         this.outputEncoding = outputEncoding;
     }
 
-    public abstract Place parsePlace(CSVRecord record);
+    public abstract Place parsePlace(CSVRecord record) throws IOException;
 
     //public abstract int reformat(InputStream ins, OutputStream outs);
     public int reformat(InputStream ins, OutputStream outs) {

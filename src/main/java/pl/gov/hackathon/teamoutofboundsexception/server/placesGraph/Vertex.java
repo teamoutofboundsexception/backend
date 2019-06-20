@@ -1,20 +1,36 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
+import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Vertex {
 
-    private int
-            placeId, cityId, placeTypeId;
-    private String
-            placeName, placeAddress;
-    private float
-            mapX, mapY,
-            normalPrice;
+    private int placeId, cityId, placeTypeId;
+    private String placeName, placeAddress;
+    private float mapX, mapY, normalPrice;
     private LocalTime avgTimeSpent, openingTime, closingTime;
     private ArrayList<Edge> edges;
     private boolean visited;
+
+    public Vertex(PlaceModel place) {
+        this.placeId = place.getPlaceId();
+        this.cityId = place.getCityId();
+
+        // TODO check if placeTypeId is null in DB
+        //this.placeTypeId = place.getPlaceTypeId();
+        this.placeTypeId = 0;
+        this.placeName = place.getPlaceName();
+        this.mapX = place.getMapX();
+        this.mapY = place.getMapY();
+        this.placeAddress = place.getAddress();
+        this.normalPrice = place.getNormalPrice();
+        this.avgTimeSpent = LocalTime.of(Integer.parseInt(place.getAvgTimeSpent().toString().substring(0, 2)), Integer.parseInt(place.getAvgTimeSpent().toString().substring(3)));
+        this.openingTime = place.getOpeningTime();
+        this.closingTime = place.getClosingTime();
+        this.edges = new ArrayList<>();
+    }
 
     public Vertex(int placeId, int cityId, int placeTypeId, String placeName,
                   float mapX, float mapY, String placeAddress,
