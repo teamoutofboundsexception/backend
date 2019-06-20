@@ -1,6 +1,11 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 
+import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
 
@@ -47,8 +52,32 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
 
 
         Place place = new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
+        //ALPHA VERSION ONLY
+        if (record.get(10).toLowerCase().contains("warszawa") == false){
+            return null;
+        }
+
         return place;
     }
 
-}
+    @Override
+    public int parseto_list(InputStream ins, List<Place> lst) {
 
+        try {
+            InputStreamReader rd = new InputStreamReader(ins, inputEncoding);
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(rd);
+
+            for (CSVRecord record : records) {
+                Place place = parsePlace(record);
+                //ALPHA VERSION ONLY
+                if(place != null) {
+                    lst.add(place);
+                }
+            }
+
+        }catch (Exception e) {
+            System.out.println("Ah shit, here we go again.\n" + e);
+        }
+        return 0;
+    }
+}
