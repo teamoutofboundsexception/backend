@@ -1,22 +1,27 @@
-package pl.gov.hackathon.teamoutofboundsexception.server.dbCon;
+package dbCon;
 
 import java.sql.*;
 
 public class DBConnection {
+
+    public static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
+    public static final String DB_URL = "jdbc:mariadb://localhost:3306/application";
+
     private Connection connection = null;
     String driver, url, username, password;
 
-    public DBConnection(String driver, String url, String username, String password){
-        this.driver = driver;
-        this.url = url;
+    public DBConnection(String username, String password){
+        this.driver = JDBC_DRIVER;
+        this.url = DB_URL;
         this.username = username;
         this.password = password;
     }
 
-    //selects and calls work
+    //selects and calls work this way
     public ResultSet executeQuery(String query) throws SQLException {
         initConnection();
         ResultSet rs = runStatement(query);
+        print(rs);
         return rs;
     }
 
@@ -51,5 +56,13 @@ public class DBConnection {
             }
         }
         return resultSet;
+    }
+
+    private void print(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            System.out.println(id + "\t" + name);
+        }
     }
 }
