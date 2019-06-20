@@ -22,7 +22,7 @@ public class TripAdvisorController {
     }
 
     @GetMapping("/advise")
-    public ResponseEntity<List<TripPlaceDTO>> getTripAdvise(@RequestBody TripRequestDTO request) {
+    public ResponseEntity<List<List<TripPlaceDTO>>> getTripAdvise(@RequestBody TripRequestDTO request) {
         return new ResponseEntity<>(tripAdvisorService.getTripAdvise(new TripPlacePromise(request)), HttpStatus.OK);
     }
 }
