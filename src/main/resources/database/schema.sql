@@ -24,6 +24,6 @@ CREATE TABLE place_model (
   visitorsNo int,
   followersNo int,
   likesNo int,
-  imageUrl varchar(256),
-  placeDescription varchar(1024)
+  imageUrl text,
+  placeDescription text
 );
