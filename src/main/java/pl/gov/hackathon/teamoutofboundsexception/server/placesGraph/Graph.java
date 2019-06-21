@@ -42,38 +42,43 @@ public class Graph {
             });
     }
 
-    public void computeTrips(){
+    public void computeTrips(float userMapX, float userMapY){
         for(Vertex v : this.vertices){
-            if (v.getAvgTimeSpent().compareTo(this.availableTime) <= 0) {
-                LocalTime totalTime = v.getAvgTimeSpent();
-                ArrayList<Vertex> tmp = (ArrayList<Vertex>) this.vertices.clone();
-                tmp.remove(v);
+            LocalTime timeToArrive = Converter.coordinatesToTime(userMapX, userMapY, v.getMapX(), v.getMapY());
+            LocalTime totalTime = Converter.addTime(v.getAvgTimeSpent(), timeToArrive);
+            if(totalTime.compareTo(this.availableTime) <= 0){
                 Trip trip = new Trip();
                 trip.add(v);
-                recursiveComputeTrips(v, trip, tmp, totalTime);
+                this.trips.add(trip);
+                ArrayList<Vertex> leftV = (ArrayList<Vertex>) this.vertices.clone();
+                leftV.remove(v);
+                recursiveComputeTrips(v, (Trip)trip.clone(), totalTime, leftV);
             }
         }
     }
 
-    private void recursiveComputeTrips(Vertex vertex, Trip trip, ArrayList<Vertex> leftV, LocalTime totalTime){
-        for(Edge edge : vertex.getEdges()){
-            Vertex other = edge.getOtherV(vertex);
-            if(leftV.contains(other)) {
-                LocalTime e = edge.getVal();
-                LocalTime v = other.getAvgTimeSpent();
-                LocalTime t = Converter.addTime(totalTime, e);
-                t = Converter.addTime(t, v);
-                if (t.compareTo(this.availableTime) > 0) {
-                    this.trips.add(trip);
-                }
-                else {
-                    totalTime = t;
-                    Trip tmpTrip = (Trip) trip.clone();
-                    tmpTrip.add(other);
-                    ArrayList<Vertex> tmp = (ArrayList<Vertex>) leftV.clone();
-                    tmp.remove(other);
-                    recursiveComputeTrips(other, tmpTrip, tmp, totalTime);
-                }
+    private void recursiveComputeTrips(Vertex vertex, Trip trip, LocalTime totalTime, ArrayList<Vertex> leftV){
+        for(Edge e : vertex.getEdges()){
+            Vertex v = e.getOtherV(vertex);
+
+            boolean valid = false;
+            for(Vertex vC : leftV){
+                if(v.getPlaceId() == vC.getPlaceId())
+                    valid = true;
+            }
+            if(!valid)
+                return;
+
+            LocalTime timeToArrive = Converter.coordinatesToTime(vertex.getMapX(), vertex.getMapY(), v.getMapX(), v.getMapY());
+            LocalTime newTotalTime = Converter.addTime(totalTime, timeToArrive);
+            newTotalTime = Converter.addTime(newTotalTime, v.getAvgTimeSpent());
+            if(newTotalTime.compareTo(this.availableTime) <= 0){
+                Trip newTrip = (Trip)trip.clone();
+                newTrip.add(v);
+                this.trips.add(newTrip);
+                ArrayList<Vertex> newLeftV = (ArrayList<Vertex>) leftV.clone();
+                newLeftV.remove(v);
+                recursiveComputeTrips(v, newTrip, newTotalTime, newLeftV);
             }
         }
     }
@@ -106,12 +111,11 @@ public class Graph {
     }
 
     public void printTrips(){
-        int i = 0;
+        System.out.println("Time ava: " + this.availableTime.toString());
         for(Trip trip : trips){
-            System.out.print(i++);
             for(Vertex v : trip){
+                System.out.print("(" + v.getPlaceId() + "{ avgT:" + v.getAvgTimeSpent()  + "}" + ")");
                 System.out.print(" -> ");
-                System.out.print(v.getPlaceId());
             }
             System.out.println();
         }
