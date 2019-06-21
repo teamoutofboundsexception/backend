@@ -16,7 +16,7 @@ CREATE TABLE place_model (
   mapY decimal,
   adress VARCHAR(128),
   normalPrice decimal(5,2) not null,
-  hash int,
+  hash VARCHAR(136),
   openingTime time,
   closingTime time,
   avgTimeSpent time,

@@ -23,8 +23,7 @@ public class Place {
     protected Float mapY;
     protected String streetName;
     protected String houseNumber;
-    // TODO change to String
-    protected Integer apartmentNumber;
+    protected String apartmentNumber;
     protected Float normalAVGPrice;
     protected Float rating;
     protected Integer visitorsNo;
@@ -33,7 +32,7 @@ public class Place {
     protected LocalTime avgTimeSpent;
 
     public Place(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
-                 String houseNumber, Integer apartmentNumber, Float normalAVGPrice) {
+                 String houseNumber, String apartmentNumber, Float normalAVGPrice) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.cityName = cityName;
@@ -52,7 +51,6 @@ public class Place {
         this.likesNo = null;
         this.avgTimeSpent = null;
     }
-
 
     public static byte[] int2array(Integer n) {
         byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();

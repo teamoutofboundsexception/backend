@@ -49,11 +49,10 @@ public class PlaceParser_WykazMuzeow extends PlaceParser {
 
         try {
             if (record.get(10) != null && !record.get(10).isEmpty()) {
-                apartmentNumber = Integer.parseInt(record.get(10));
+                apartmentNumber = record.get(10);
             } else {
                 apartmentNumber = null;
             }
-
 
             //apartmentNumber = record.get(10);
 
