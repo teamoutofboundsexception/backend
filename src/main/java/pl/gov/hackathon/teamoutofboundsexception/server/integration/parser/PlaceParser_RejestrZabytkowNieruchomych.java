@@ -21,12 +21,9 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
         }
 
         String tmp = record.get(0);
-        try {
 
-            placeId = 110000000 + Integer.parseInt(tmp.substring(tmp.lastIndexOf('.') + 1));
-        } catch (Exception e) {
-            System.out.println("Exception ocured parsing id: " + e);
-        }
+        placeId = 110000000 + Integer.parseInt(tmp.substring(tmp.lastIndexOf('.') + 1));
+
 
         // 10 for warsaw only - for alpha version
         cityId = cities.get(record.get(10));
@@ -38,9 +35,11 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
         }
 
         placeTypeId = placeTypes.get(record.get(5));
+
         if (placeTypeId == null) {
             placeTypeId = placeTypes.put(record.get(5));
         }
+
         placeName = record.get(3);
         mapX = null;
         mapY = null;
@@ -56,9 +55,7 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
 
         normalAVGPrice = null;
 
-        Place place = new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
-
-        return place;
+        return new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
     }
 
     @Override

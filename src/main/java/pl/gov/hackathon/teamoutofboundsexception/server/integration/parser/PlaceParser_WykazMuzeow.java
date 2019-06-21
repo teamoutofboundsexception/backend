@@ -34,40 +34,17 @@ public class PlaceParser_WykazMuzeow extends PlaceParser {
 
         streetName = record.get(7) + " " + record.get(8);
         houseNumber = null;
-        apartmentNumber = null;
+        houseNumber = record.get(9);
 
-        try {
-            houseNumber = record.get(9);
-        } catch (NumberFormatException e) {
-            System.out.println("housenumber:" + e);
-            System.out.println(record.get(9));
-
-            //happens, do nothing just leave null
-        } catch (Exception e) {
-            System.out.println("Exception:" + e);
-        }
-
-        try {
-            if (record.get(10) != null && !record.get(10).isEmpty()) {
-                apartmentNumber = record.get(10);
-            } else {
-                apartmentNumber = null;
-            }
-
-            //apartmentNumber = record.get(10);
-
-        } catch (NumberFormatException e) {
-            System.out.println("apartmentnumber:" + e);
-            System.out.println(record.get(10));
-            //happens, do nothing just leave null
-
-        } catch (Exception e) {
-            System.out.println("Exception:" + e);
+        if (record.get(10) != null && !record.get(10).isEmpty()) {
+            apartmentNumber = record.get(10);
+        } else {
+            apartmentNumber = null;
         }
 
         List<Cordinates> cordinates = converterService.addressToCordinates(new Address(cityName, houseNumber, streetName, postalCode));
 
-        if (cordinates.size() > 0) {
+       if (cordinates.size() > 0) {
             // TODO check and change
             mapX = cordinates.get(0).lat;
             mapY = cordinates.get(0).lon;
@@ -78,8 +55,6 @@ public class PlaceParser_WykazMuzeow extends PlaceParser {
 
         normalAVGPrice = null;
 
-        Place place = new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
-
-        return place;
+        return new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
     }
 }
