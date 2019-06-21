@@ -15,5 +15,5 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
     // TODO add orderby like in procedure
     List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfter(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);
 
-    List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfterAndImageUrlIsNull(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);
+    List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfterAndImageUrlIsNotNull(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);
 }
