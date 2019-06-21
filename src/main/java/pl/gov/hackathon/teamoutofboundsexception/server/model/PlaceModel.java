@@ -96,4 +96,8 @@ public class PlaceModel {
 
         closingTime = LocalTime.now().withHour(closingTemp);
     }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

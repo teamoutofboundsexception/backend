@@ -25,7 +25,7 @@ public class TripAdvisorService {
     public List<List<TripPlaceDTO>> getTripAdvise(TripPlacePromise promise) {
         LocalTime x = LocalTime.now();
 
-        List<PlaceModel> tempList = placeRepository.findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfter(promise.getActualPlaceName(), promise.getLongitude() - (float) 20.0, promise.getLongitude() + (float) 20.0,promise.getLatitude() - (float) 20.0, promise.getLatitude() + (float) 20.0, x, x);
+        List<PlaceModel> tempList = placeRepository.findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfterAndImageUrlIsNotNull(promise.getActualPlaceName(), promise.getLongitude() - (float) 20.0, promise.getLongitude() + (float) 20.0,promise.getLatitude() - (float) 20.0, promise.getLatitude() + (float) 20.0, x, x);
 
         Graph graph = new Graph();
         graph.initGraph(tempList, promise.getTime());

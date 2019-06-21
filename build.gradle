@@ -20,6 +20,8 @@ bootRun {
 }
 
 dependencies {
+    compile group: 'com.google.code.gson', name: 'gson', version:'2.7'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	//implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
