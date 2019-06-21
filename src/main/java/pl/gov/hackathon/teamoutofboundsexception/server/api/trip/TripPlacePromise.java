@@ -70,7 +70,7 @@ public class TripPlacePromise {
         }
 
         this.time = LocalTime.of(Integer.parseInt(dto.getTime().substring(0, 2)), Integer.parseInt(dto.getTime().substring(3)));
-        this.longitude = dto.getLongitude();
-        this.latitude = dto.getLatitude();
+        this.longitude = dto.getLatitude();
+        this.latitude = dto.getLongitude() ;
     }
 }

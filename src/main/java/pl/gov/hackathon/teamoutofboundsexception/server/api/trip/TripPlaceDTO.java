@@ -13,7 +13,7 @@ public class TripPlaceDTO {
     private Float longitude;
     private Float latitude;
     private String rating;
-    private String imageUrl;
+    private String image;
     private Boolean wheelChairFriendly;
     private Boolean blindFriendly;
 
@@ -25,7 +25,7 @@ public class TripPlaceDTO {
         this.longitude = v.getMapY();
         this.latitude = v.getMapX();
         this.rating = v.getRating().toString().substring(0, 4);
-        this.imageUrl = v.getImageUrl();
+        this.image = v.getImageUrl();
         this.text = v.getPlaceDescription();
         this.blindFriendly = v.getBlindFriendly();
         this.wheelChairFriendly = v.getWheelChairFriendly();
