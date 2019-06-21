@@ -29,7 +29,7 @@ public class TripAdvisorService {
 
         Graph graph = new Graph();
         graph.initGraph(tempList, promise.getTime());
-        graph.computeTrips();
+        graph.computeTrips(promise.getLongitude(), promise.getLatitude());
 
         ArrayList<Trip> trips = graph.getTrips();
         //graph.printTrips();
