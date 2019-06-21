@@ -17,6 +17,8 @@ public class Vertex {
     private boolean visited;
     private Float rating;
     private String imageUrl, placeDescription;
+    private Boolean wheelChairFriendly;
+    private Boolean blindFriendly;
 
     public Vertex(PlaceModel place) {
         this.placeId = place.getPlaceId();
@@ -37,6 +39,8 @@ public class Vertex {
         this.rating = place.getRating();
         this.imageUrl = place.getImageUrl();
         this.placeDescription = place.getPlaceDescription();
+        this.wheelChairFriendly = place.getWheelChairFriendly();
+        this.blindFriendly = place.getBlindFriendly();
     }
 
     public Vertex(int placeId, int cityId, int placeTypeId, String placeName,

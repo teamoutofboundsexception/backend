@@ -14,6 +14,8 @@ public class TripPlaceDTO {
     private Float latitude;
     private String rating;
     private String imageUrl;
+    private Boolean wheelChairFriendly;
+    private Boolean blindFriendly;
 
     public TripPlaceDTO(Vertex v) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
@@ -25,5 +27,7 @@ public class TripPlaceDTO {
         this.rating = v.getRating().toString().substring(0, 4);
         this.imageUrl = v.getImageUrl();
         this.text = v.getPlaceDescription();
+        this.blindFriendly = v.getBlindFriendly();
+        this.wheelChairFriendly = v.getWheelChairFriendly();
     }
 }

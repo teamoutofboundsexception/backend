@@ -25,7 +25,7 @@ public class WikiSynchronizationController {
     }
 
     @GetMapping("/perform")
-    public ResponseEntity<String> test() {
+    public ResponseEntity<String> synchronizeDescription() {
         List<PlaceModel> list =  placeRepository.findByCityNameAndPlaceDescriptionIsNull("Warszawa");
 
         list.forEach(place -> {
