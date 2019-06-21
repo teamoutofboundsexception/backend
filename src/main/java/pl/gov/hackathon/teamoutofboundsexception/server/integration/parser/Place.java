@@ -62,6 +62,7 @@ public class Place {
         return bytes;
     }
 
+    // TODO ustalic która metoda jakie pola bierze pod uwage
     public String md5HashCode(){
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -95,6 +96,7 @@ public class Place {
         return null;
     }
 
+    // TODO ustalic która metoda jakie pola bierze pod uwage
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
