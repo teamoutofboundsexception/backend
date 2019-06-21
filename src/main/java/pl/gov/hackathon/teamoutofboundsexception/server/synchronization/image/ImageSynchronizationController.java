@@ -13,7 +13,6 @@ import pl.gov.hackathon.teamoutofboundsexception.server.util.Sleepy;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController

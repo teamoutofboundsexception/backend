@@ -3,7 +3,6 @@ package pl.gov.hackathon.teamoutofboundsexception.server.api.trip;
 import lombok.Data;
 import pl.gov.hackathon.teamoutofboundsexception.server.placesGraph.Vertex;
 
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
@@ -14,15 +13,7 @@ public class TripPlaceDTO {
     private Float longitude;
     private Float latitude;
     private String rating;
-
-    public TripPlaceDTO(String title, String text, LocalTime time, Float longitude, Float latitude) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-        this.title = title;
-        this.text = text;
-        this.time = time.format(dtf);
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
+    private String imageUrl;
 
     public TripPlaceDTO(Vertex v) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
@@ -33,5 +24,6 @@ public class TripPlaceDTO {
         this.longitude = v.getMapY();
         this.latitude = v.getMapX();
         this.rating = v.getRating().toString().substring(0, 4);
+        this.imageUrl = v.getImageUrl();
     }
 }
