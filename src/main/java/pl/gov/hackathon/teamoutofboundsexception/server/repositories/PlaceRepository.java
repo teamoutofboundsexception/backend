@@ -4,6 +4,7 @@ package pl.gov.hackathon.teamoutofboundsexception.server.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
@@ -11,6 +12,6 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
 
     List<PlaceModel> findByMapXAndMapY(Float mapX, Float mapY);
 
-    // TODO add time and orderby like in procedure
-    List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetween(String cityName, Float v, Float x, Float y, Float z);
+    // TODO add orderby like in procedure
+    List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfter(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);
 }
