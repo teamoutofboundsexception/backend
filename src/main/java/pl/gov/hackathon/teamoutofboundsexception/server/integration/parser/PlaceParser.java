@@ -25,7 +25,7 @@ public abstract class PlaceParser {
     protected Float mapY;
     protected String streetName;
     protected String houseNumber;
-    protected Integer apartmentNumber;
+    protected String apartmentNumber;
     protected Float normalAVGPrice;
 
     @Autowired
