@@ -16,7 +16,7 @@ public class Vertex {
     private ArrayList<Edge> edges;
     private boolean visited;
     private Float rating;
-    private String imageUrl;
+    private String imageUrl, placeDescription;
 
     public Vertex(PlaceModel place) {
         this.placeId = place.getPlaceId();
@@ -36,6 +36,7 @@ public class Vertex {
         this.edges = new ArrayList<>();
         this.rating = place.getRating();
         this.imageUrl = place.getImageUrl();
+        this.placeDescription = place.getPlaceDescription();
     }
 
     public Vertex(int placeId, int cityId, int placeTypeId, String placeName,

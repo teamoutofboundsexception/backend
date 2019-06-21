@@ -45,7 +45,7 @@ public class PlaceModel {
     private static final Random RANDOM = new Random();
 
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
-                      String houseNumber, String apartmentNumber, String hash) {
+                      String houseNumber, String apartmentNumber, String hash, String placeDescription) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.cityName = cityName;
@@ -56,6 +56,7 @@ public class PlaceModel {
         this.mapY = mapY;
         this.address = streetName;
         this.hash = hash;
+        this.placeDescription = placeDescription;
 
         if (houseNumber != null && !houseNumber.isEmpty()) {
             address = address + " " + houseNumber;
@@ -81,7 +82,7 @@ public class PlaceModel {
         visitorsNo = randomInt(0, 10000);
         followerNo = randomInt(0,100);
         likesNo = randomInt(0,10000);
-        avgTimeSpent = LocalTime.of(15, 30);
+        avgTimeSpent = LocalTime.of(4, 0);
         normalPrice = randomFloat(10, 120);
 
         int openningHour = randomInt(6,10);
@@ -99,5 +100,9 @@ public class PlaceModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setPlaceDescription(String placeDescription) {
+        this.placeDescription = placeDescription;
     }
 }

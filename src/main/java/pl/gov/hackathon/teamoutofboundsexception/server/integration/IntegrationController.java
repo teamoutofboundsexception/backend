@@ -20,6 +20,8 @@ import pl.gov.hackathon.teamoutofboundsexception.server.integration.pojo.Resourc
 import pl.gov.hackathon.teamoutofboundsexception.server.localization.ConverterService;
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
 import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceRepository;
+import pl.gov.hackathon.teamoutofboundsexception.server.synchronization.description.WikiSynchronizationService;
+import pl.gov.hackathon.teamoutofboundsexception.server.util.Sleepy;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +31,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/integration")
@@ -41,12 +44,14 @@ public class IntegrationController {
 
     private PlaceRepository placeRepository;
     private ConverterService converterService;
+    private WikiSynchronizationService wikiSynchronizationService;
 
     @Autowired
-    public IntegrationController(PlaceRepository placeRepository, ConverterService converterService) {
+    public IntegrationController(PlaceRepository placeRepository, ConverterService converterService, WikiSynchronizationService wikiSynchronizationService) {
 
         this.placeRepository = placeRepository;
         this.converterService = converterService;
+        this.wikiSynchronizationService = wikiSynchronizationService;
 
         ApplicationHome home = new ApplicationHome(ServerApplication.class);
         tempFileAbsolutePath = home.getDir().getAbsolutePath() + File.separator + "temp" + File.separator;
@@ -87,7 +92,13 @@ public class IntegrationController {
 
         List<PlaceModel> places = new LinkedList<>();
 
-        placeList.forEach(place -> places.add(new PlaceModel(place.getPlaceId(), place.getCityId(), place.getCityName(), place.getPostalCode(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.md5HashCode() + new Integer(place.hashCode()).toString())));
+        placeList.forEach(place -> {
+
+            String placeDescription = wikiSynchronizationService.getDescription(place.getPlaceName());
+            Sleepy.sleep(1);
+
+            places.add(new PlaceModel(place.getPlaceId(), place.getCityId(), place.getCityName(), place.getPostalCode(), place.getPlaceTypeId(), place.getPlaceName(), place.getMapX(), place.getMapY(), place.getStreetName(), place.getHouseNumber(), place.getApartmentNumber(), place.md5HashCode() + new Integer(place.hashCode()).toString(), placeDescription));
+        });
 
         places.forEach(n -> {
             if (places.size() > 0) {

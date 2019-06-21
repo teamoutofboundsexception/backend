@@ -11,6 +11,7 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
     PlaceModel findByHash(String hash);
 
     List<PlaceModel> findByCityNameAndImageUrlIsNull(String cityName);
+    List<PlaceModel> findByCityNameAndPlaceDescriptionIsNull(String cityName);
 
     // TODO add orderby like in procedure
     List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfter(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);
