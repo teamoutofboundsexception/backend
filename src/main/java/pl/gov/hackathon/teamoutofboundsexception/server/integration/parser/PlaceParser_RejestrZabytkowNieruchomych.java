@@ -15,6 +15,11 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
 
     @Override
     public Place parsePlace(CSVRecord record) {
+        //ALPHA VERSION ONLY
+        if (record.get(10).toLowerCase().contains("warszawa") == false) {
+            return null;
+        }
+
         String tmp = record.get(0);
         try {
 
@@ -23,12 +28,13 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
             System.out.println("Exception ocured parsing id: " + e);
         }
 
-        cityId = cities.get(record.get(11));
-        cityName = record.get(11);
+        // 10 for warsaw only - for alpha version
+        cityId = cities.get(record.get(10));
+        cityName = record.get(10);
         postalCode = null;
 
         if (cityId == null) {
-            cityId = cities.put(record.get(11));
+            cityId = cities.put(record.get(10));
         }
 
         placeTypeId = placeTypes.get(record.get(5));
@@ -50,12 +56,7 @@ public class PlaceParser_RejestrZabytkowNieruchomych extends PlaceParser {
 
         normalAVGPrice = null;
 
-
         Place place = new Place(placeId, cityId, cityName, postalCode, placeTypeId, placeName, mapX, mapY, streetName, houseNumber, apartmentNumber, normalAVGPrice);
-        //ALPHA VERSION ONLY
-        if (record.get(10).toLowerCase().contains("warszawa") == false){
-            return null;
-        }
 
         return place;
     }
