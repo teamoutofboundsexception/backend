@@ -13,6 +13,7 @@ public class TripPlaceDTO {
     private String time;
     private Float longitude;
     private Float latitude;
+    private Float rating;
 
     public TripPlaceDTO(String title, String text, LocalTime time, Float longitude, Float latitude) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
@@ -31,5 +32,6 @@ public class TripPlaceDTO {
         this.time = v.getAvgTimeSpent().format(dtf);
         this.longitude = v.getMapY();
         this.latitude = v.getMapX();
+        this.rating = v.getRating();
     }
 }

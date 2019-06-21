@@ -1,10 +1,12 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
+import lombok.Getter;
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+@Getter
 public class Vertex {
 
     private int placeId, cityId, placeTypeId;
@@ -13,6 +15,7 @@ public class Vertex {
     private LocalTime avgTimeSpent, openingTime, closingTime;
     private ArrayList<Edge> edges;
     private boolean visited;
+    private Float rating;
 
     public Vertex(PlaceModel place) {
         this.placeId = place.getPlaceId();
@@ -30,6 +33,7 @@ public class Vertex {
         this.openingTime = place.getOpeningTime();
         this.closingTime = place.getClosingTime();
         this.edges = new ArrayList<>();
+        this.rating = place.getRating();
     }
 
     public Vertex(int placeId, int cityId, int placeTypeId, String placeName,
@@ -55,48 +59,5 @@ public class Vertex {
         Edge edge = new Edge(this, vertex, val);
         this.edges.add(edge);
         vertex.getEdges().add(edge);
-    }
-
-    public ArrayList<Edge> getEdges() {
-        return edges;
-    }
-    public LocalTime getAvgTimeSpent() {
-        return avgTimeSpent;
-    }
-    public LocalTime getClosingTime() {
-        return closingTime;
-    }
-    public float getMapX() {
-        return mapX;
-    }
-    public float getMapY() {
-        return mapY;
-    }
-    public float getNormalPrice() {
-        return normalPrice;
-    }
-    public LocalTime getOpeningTime() {
-        return openingTime;
-    }
-    public int getCityId() {
-        return cityId;
-    }
-    public int getPlaceId() {
-        return placeId;
-    }
-    public int getPlaceTypeId() {
-        return placeTypeId;
-    }
-    public String getPlaceAddress() {
-        return placeAddress;
-    }
-    public String getPlaceName() {
-        return placeName;
-    }
-    public boolean isVisited() {
-        return visited;
-    }
-    public void setVisited(boolean visited) {
-        this.visited = visited;
     }
 }
