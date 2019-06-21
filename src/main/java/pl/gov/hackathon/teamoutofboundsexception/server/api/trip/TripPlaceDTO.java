@@ -23,11 +23,11 @@ public class TripPlaceDTO {
         this.latitude = latitude;
     }
 
-    public TripPlaceDTO(Vertex v) {
+    public TripPlaceDTO(Vertex v, String text) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
         this.title = v.getPlaceName();
-        this.text = "Lorem Ipsum Dolor";
+        this.text = text;
         this.time = v.getAvgTimeSpent().format(dtf);
         this.longitude = v.getMapY();
         this.latitude = v.getMapX();
