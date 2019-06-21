@@ -2,33 +2,27 @@ package pl.gov.hackathon.teamoutofboundsexception.server.placesGraph;
 
 import pl.gov.hackathon.teamoutofboundsexception.server.model.PlaceModel;
 
-import java.sql.ResultSet;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-
-    private static final String queryBeginning = "call GetPlacesList(";
-
     private ArrayList<Vertex> vertices;
     private ArrayList<Trip> trips;
-    private ResultSet resultSet = null;
-
     private LocalTime availableTime;
 
+    // TODO set default time
     public Graph(){
         this.vertices = new ArrayList<>();
         this.trips = new ArrayList<>();
     }
 
-    public Graph(ResultSet resultSet, LocalTime availableTime){
+    public Graph(LocalTime availableTime){
         this();
         this.availableTime = availableTime;
-        this.resultSet = resultSet;
     }
 
-    public void initGraph(/*ResultSet resultSet, */List<PlaceModel> placesList, LocalTime availableTime) {
+    public void initGraph(List<PlaceModel> placesList, LocalTime availableTime) {
         this.availableTime = availableTime;
 
             placesList.forEach(place -> {
