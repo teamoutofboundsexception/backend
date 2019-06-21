@@ -10,7 +10,7 @@ import java.util.List;
 public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
     PlaceModel findByHash(String hash);
 
-    List<PlaceModel> findByMapXAndMapY(Float mapX, Float mapY);
+    List<PlaceModel> findByCityNameAndImageUrlIsNull(String cityName);
 
     // TODO add orderby like in procedure
     List<PlaceModel> findByCityNameAndMapXBetweenAndMapYBetweenAndOpeningTimeIsBeforeAndClosingTimeIsAfter(String cityName, Float v, Float x, Float y, Float z, LocalTime after, LocalTime before);

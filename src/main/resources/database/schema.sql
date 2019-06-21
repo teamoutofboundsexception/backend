@@ -27,3 +27,9 @@ CREATE TABLE place_model (
   imageUrl text,
   placeDescription text
 );
+
+ALTER TABLE place_model
+  ALTER COLUMN imageUrl TYPE text;
+
+ALTER TABLE place_model
+  ALTER COLUMN placeDescription TYPE text;

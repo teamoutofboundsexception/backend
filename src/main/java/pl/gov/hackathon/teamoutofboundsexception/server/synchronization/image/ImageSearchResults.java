@@ -1,4 +1,4 @@
-package pl.gov.hackathon.teamoutofboundsexception.server.image;
+package pl.gov.hackathon.teamoutofboundsexception.server.synchronization.image;
 
 import java.util.HashMap;
 
