@@ -34,4 +34,3 @@ public class ServerApplication {
 	}
 }
 // TODO POGODA
-// TODO OPEN STREET MAP - > xy -> adres i odwrotnie
