@@ -30,6 +30,7 @@ public class PlaceModel {
     private String address;
     private Float normalPrice;
     private int hash;
+    private String md5Hash;
 
     private LocalTime openingTime;
     private LocalTime closingTime;
@@ -41,9 +42,8 @@ public class PlaceModel {
 
     private static final Random RANDOM = new Random();
 
-
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
-                      String houseNumber, Integer apartmentNumber, Integer hash) {
+                      String houseNumber, Integer apartmentNumber, Integer hash, String md5Hash) {
         this.placeId = placeId;
         this.cityId = cityId;
         this.cityName = cityName;
@@ -54,6 +54,7 @@ public class PlaceModel {
         this.mapY = mapY;
         this.address = streetName;
         this.hash = hash;
+        this.md5Hash = md5Hash;
 
         if (houseNumber != null && !houseNumber.isEmpty()) {
             address = address + " " + houseNumber;
@@ -62,8 +63,8 @@ public class PlaceModel {
         if (apartmentNumber != null) {
             address = address + "/" + apartmentNumber;
         }
-        add_random_atributes();
 
+        add_random_atributes();
     }
 
     public static float randomFloat(float min, float max) {

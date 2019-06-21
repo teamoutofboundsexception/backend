@@ -5,6 +5,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalTime;
 
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
+
 @Getter
 public class Place {
 
@@ -46,6 +51,50 @@ public class Place {
         this.followerNo = null;
         this.likesNo = null;
         this.avgTimeSpent = null;
+    }
+
+
+    public static byte[] int2array(Integer n) {
+        byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
+        return bytes;
+    }
+
+    public static byte[] float2array(Float f){
+        byte[] bytes = ByteBuffer.allocate(4).putFloat(f).array();
+        return bytes;
+    }
+
+    public String md5HashCode(){
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+            messageDigest.update(int2array(cityId));
+            messageDigest.update(cityName.getBytes());
+            messageDigest.update(postalCode.getBytes());
+
+            if (placeTypeId != null) {
+                messageDigest.update(int2array(placeTypeId));
+            }
+
+            messageDigest.update(placeName.getBytes());
+
+            if (mapX != null) {
+                messageDigest.update(float2array(mapX));
+            }
+
+            if (mapY != null) {
+                messageDigest.update(float2array(mapY));
+            }
+
+            messageDigest.update(streetName.getBytes());
+
+            byte[] digest = messageDigest.digest();
+            return DatatypeConverter.printHexBinary(digest);
+        } catch(NoSuchAlgorithmException e) {
+            System.out.println(e);
+        }
+
+        return null;
     }
 
     @Override
