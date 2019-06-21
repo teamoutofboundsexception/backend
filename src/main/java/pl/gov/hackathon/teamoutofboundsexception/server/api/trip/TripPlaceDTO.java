@@ -11,15 +11,15 @@ public class TripPlaceDTO {
     private String title;
     private String text;
     private String time;
-    private Float longtitude;
+    private Float longitude;
     private Float latitude;
 
-    public TripPlaceDTO(String title, String text, LocalTime time, Float longtitude, Float latitude) {
+    public TripPlaceDTO(String title, String text, LocalTime time, Float longitude, Float latitude) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
         this.title = title;
         this.text = text;
         this.time = time.format(dtf);
-        this.longtitude = longtitude;
+        this.longitude = longitude;
         this.latitude = latitude;
     }
 
@@ -29,7 +29,7 @@ public class TripPlaceDTO {
         this.title = v.getPlaceName();
         this.text = "Lorem Ipsum Dolor";
         this.time = v.getAvgTimeSpent().format(dtf);
-        this.longtitude = v.getMapY();
+        this.longitude = v.getMapY();
         this.latitude = v.getMapX();
     }
 }

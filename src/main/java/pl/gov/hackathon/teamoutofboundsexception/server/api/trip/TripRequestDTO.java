@@ -6,6 +6,6 @@ import lombok.Data;
 public class TripRequestDTO {
     private String actualPlaceName;
     private String time;
-    private Float longtitude;
+    private Float longitude;
     private Float latitude;
 }
