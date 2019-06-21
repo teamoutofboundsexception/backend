@@ -42,6 +42,9 @@ public class PlaceModel {
     private String imageUrl;
     private String placeDescription;
 
+    private Boolean wheelChairFriendly;
+    private Boolean blindFriendly;
+
     private static final Random RANDOM = new Random();
 
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
@@ -94,6 +97,9 @@ public class PlaceModel {
         if (closingTemp > 23) {
             closingTemp = 23;
         }
+
+        blindFriendly = randomInt(0, 100) <= 40 ? true : false;
+        wheelChairFriendly = randomInt(0, 100) <= 40 ? true : false;
 
         closingTime = LocalTime.now().withHour(closingTemp);
     }

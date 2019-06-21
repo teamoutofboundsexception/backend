@@ -11,7 +11,6 @@ import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceReposi
 import pl.gov.hackathon.teamoutofboundsexception.server.util.Sleepy;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/wiki")

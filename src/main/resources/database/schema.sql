@@ -33,3 +33,9 @@ ALTER TABLE place_model
 
 ALTER TABLE place_model
   ALTER COLUMN placeDescription TYPE text;
+
+ALTER TABLE place_model
+  ADD COLUMN blind_friendly bool;
+
+ALTER TABLE place_model
+  ADD COLUMN wheel_chair_friendly bool;
