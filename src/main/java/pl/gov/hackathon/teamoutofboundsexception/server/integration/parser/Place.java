@@ -55,35 +55,43 @@ public class Place {
         byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
         return bytes;
     }
+
     public static byte[] float2array(Float f){
         byte[] bytes = ByteBuffer.allocate(4).putFloat(f).array();
         return bytes;
     }
 
-    public String stringHashCode(){
+    public String md5HashCode(){
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 
             messageDigest.update(int2array(cityId));
             messageDigest.update(cityName.getBytes());
             messageDigest.update(postalCode.getBytes());
-            messageDigest.update(int2array(placeTypeId));
+
+            if (placeTypeId != null) {
+                messageDigest.update(int2array(placeTypeId));
+            }
+
             messageDigest.update(placeName.getBytes());
-            messageDigest.update(float2array(mapX));
-            messageDigest.update(float2array(mapY));
+
+            if (mapX != null) {
+                messageDigest.update(float2array(mapX));
+            }
+
+            if (mapY != null) {
+                messageDigest.update(float2array(mapY));
+            }
+
             messageDigest.update(streetName.getBytes());
 
             byte[] digest = messageDigest.digest();
-            String hashedOutput = DatatypeConverter.printHexBinary(digest);
-            return hashedOutput;
-
-
-        }catch(NoSuchAlgorithmException e) {
+            return DatatypeConverter.printHexBinary(digest);
+        } catch(NoSuchAlgorithmException e) {
             System.out.println(e);
         }
+
         return null;
-
-
     }
 
     @Override
