@@ -1,5 +1,6 @@
 package pl.gov.hackathon.teamoutofboundsexception.server.api.trip;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.gov.hackathon.teamoutofboundsexception.server.localization.Address;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TripAdvisorService {
     private PlaceRepository placeRepository;
@@ -28,7 +30,7 @@ public class TripAdvisorService {
         this.converterService = converterService;
     }
 
-    public List<List<TripPlaceDTO>> getTripAdvise(TripPlacePromise promise) throws IOException {
+    public List<List<TripPlaceDTO>> getTripAdvise(TripPlacePromise promise) {
 
         // We have cordinates
         if (promise.getLatitude() != null && promise.getLongitude() != null) {
@@ -47,7 +49,13 @@ public class TripAdvisorService {
 
             // We dont have cordinates
         } else if (promise.getCityName() != null && promise.getStreet() != null) {
-            List<Cordinates> list = converterService.addressToCordinates(new Address(promise.getCityName(), promise.getHouseNumber(), promise.getStreet(), null));
+            List<Cordinates> list = null;
+
+            try {
+                list = converterService.addressToCordinates(new Address(promise.getCityName(), promise.getHouseNumber(), promise.getStreet(), null));
+            } catch (IOException e) {
+               log.error("Error during retrieving cordinates");
+            }
 
             if (list.size() > 0) {
                 return prepareTripAdviceBasedOnLocationAndCityName(new TripPlacePromise(promise.getCityName(), null, promise.getHouseNumber(), promise.getTime(), list.get(0).lat, list.get(0).lon));
