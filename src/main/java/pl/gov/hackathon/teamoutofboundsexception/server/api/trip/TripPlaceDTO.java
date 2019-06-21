@@ -15,11 +15,11 @@ public class TripPlaceDTO {
     private String rating;
     private String imageUrl;
 
-    public TripPlaceDTO(Vertex v) {
+    public TripPlaceDTO(Vertex v, String text) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
         this.title = v.getPlaceName();
-        this.text = "Lorem Ipsum Dolor";
+        this.text = text;
         this.time = v.getAvgTimeSpent().format(dtf);
         this.longitude = v.getMapY();
         this.latitude = v.getMapX();
