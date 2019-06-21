@@ -23,5 +23,7 @@ CREATE TABLE place_model (
   rating decimal(5,2),
   visitorsNo int,
   followersNo int,
-  likesNo int
+  likesNo int,
+  imageUrl varchar(256),
+  placeDescription varchar(1024)
 );

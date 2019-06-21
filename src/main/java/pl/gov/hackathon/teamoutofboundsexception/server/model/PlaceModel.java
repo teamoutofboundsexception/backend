@@ -39,6 +39,9 @@ public class PlaceModel {
     private Integer followerNo;
     private Integer likesNo;
 
+    private String imageUrl;
+    private String placeDescription;
+
     private static final Random RANDOM = new Random();
 
     public PlaceModel(Integer placeId, Integer cityId, String cityName, String postalCode, Integer placeTypeId, String placeName, Float mapX, Float mapY, String streetName,
