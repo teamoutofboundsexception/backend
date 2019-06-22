@@ -15,8 +15,10 @@ import pl.gov.hackathon.teamoutofboundsexception.server.repositories.PlaceReposi
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -76,7 +78,12 @@ public class TripAdvisorService {
 
         ArrayList<Trip> trips = graph.getTrips();
         //graph.printTrips();
-        return prepareResponse(trips);
+
+        List<List<TripPlaceDTO>> temp = prepareResponse(trips);
+
+        Collections.reverse(temp);
+
+        return temp.stream().limit(5).collect(Collectors.toList());
     }
 
     List<List<TripPlaceDTO>> prepareResponse(ArrayList<Trip> trips) {
