@@ -4,14 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.system.ApplicationHome;
-import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 
 @Slf4j
 @SpringBootApplication
-@EnableNeo4jRepositories("pl.gov.hackathon.teamoutofboundsexception.server.repositories")
 public class ServerApplication {
 
 	@PostConstruct

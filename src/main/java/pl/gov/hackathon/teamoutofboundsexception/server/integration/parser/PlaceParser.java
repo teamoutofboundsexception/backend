@@ -2,6 +2,7 @@ package pl.gov.hackathon.teamoutofboundsexception.server.integration.parser;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.util.List;
@@ -10,11 +11,14 @@ public abstract class PlaceParser {
 
     protected String inputEncoding;
     protected String outputEncoding;
-    protected CitiesMaping cities;
+    protected AtributeMaping cities;
+    protected AtributeMaping placeTypes;
 
     //temporal for parsing single record:
     protected Integer placeId;
     protected Integer cityId;
+    protected String cityName;
+    protected String postalCode;
     protected Integer placeTypeId;
     protected String placeName;
     protected Float mapX;
@@ -24,8 +28,10 @@ public abstract class PlaceParser {
     protected Integer apartmentNumber;
     protected Float normalAVGPrice;
 
-    public PlaceParser(CitiesMaping cities, String outputEncoding, String inputEncoding) {
+    @Autowired
+    public PlaceParser(AtributeMaping cities, AtributeMaping placeTypes, String outputEncoding, String inputEncoding) {
         this.cities = cities;
+        this.placeTypes = placeTypes;
         this.inputEncoding = inputEncoding;
         this.outputEncoding = outputEncoding;
     }
@@ -63,7 +69,6 @@ public abstract class PlaceParser {
 
                 lst.add(place);
             }
-
         } catch (Exception e) {
             System.out.println("Ah shit, here we go again.\n" + e);
         }
